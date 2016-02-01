@@ -4,3 +4,10 @@ http://127.0.0.1:8080/app_food/UserLoginServlet
 参数：String userName
 	 String password
 	 
+	 
+菜单操作
+http://127.0.0.1:8080/app_food/DishControlServlet
+请求方式  GET POST
+参数
+	String status
+	
