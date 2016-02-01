@@ -1,0 +1,6 @@
+用户注册
+http://127.0.0.1:8080/app_food/UserLoginServlet
+请求方式 GET
+参数：String userName
+	 String password
+	 
