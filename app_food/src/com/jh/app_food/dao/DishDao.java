@@ -1,5 +1,7 @@
 package com.jh.app_food.dao;
 
+import org.json.JSONArray;
+
 import com.jh.app_food.entity.Dish;
 
 public interface DishDao {
@@ -9,5 +11,5 @@ public interface DishDao {
 	
 	public boolean changeDish(Dish dish);
 	
-	public Dish findDish();
+	public JSONArray findDish();
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.json.JSONArray;
 
 import com.jh.app_food.dao.DishDao;
 import com.jh.app_food.entity.Dish;
@@ -50,7 +51,7 @@ public class DishDaoImpl implements DishDao {
 	}
 
 	@Override
-	public Dish findDish() {
+	public JSONArray findDish() {
 		// TODO Auto-generated method stub
 		return null;
 	}

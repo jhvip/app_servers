@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.jh.app_food.dao.DishDao;
@@ -44,9 +45,10 @@ public class DishControlServlet extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");				
 		PrintWriter out = null;				
 		JSONObject jsonObject=new JSONObject();
+		Dish dish=new Dish();
 		switch (status) {
 		case "insert":
-			Dish dish=new Dish();
+			
 			dish.setDish_no(request.getParameter("dish_no"));
 			dish.setDish_name(request.getParameter("dish_name"));
 			dish.setDish_price(request.getIntHeader("dish_price"));
@@ -93,17 +95,50 @@ public class DishControlServlet extends HttpServlet {
 			}		
 			break;
 		case "change":
-	
+			dish.setDish_no(request.getParameter("dish_no"));
+			dish.setDish_name(request.getParameter("dish_name"));
+			dish.setDish_price(request.getIntHeader("dish_price"));
+			dish.setDish_class(request.getIntHeader("dish_class"));
+			dish.setDish_discount(request.getIntHeader("dish_discount"));
+			
+			boolean chSuccess=dishDao.insertDish(dish);
+			
+			jsonObject.put("control", "change");
+			if (chSuccess) {
+				jsonObject.put("status", "success");
+			}else {
+				jsonObject.put("status", "error");
+			}
+			try {
+			    out = response.getWriter();
+			    out.write(jsonObject.toString());
+			} catch (IOException e) {
+			    e.printStackTrace();
+			} finally {
+			    if (out != null) {
+			        out.close();
+			    }
+			}
 			break;
 		case "find":
-	
+			JSONArray jsonArray =new JSONArray();
+			jsonObject.put("control", "change");
+			jsonArray.put(dishDao.findDish());
+			try {
+			    out = response.getWriter();
+			    out.write(jsonArray.toString());
+			} catch (IOException e) {
+			    e.printStackTrace();
+			} finally {
+			    if (out != null) {
+			        out.close();
+			    }
+			}	
 			break;
 		default:
 			break;
 		}
-		
-		
-		
+
 	}
 
 }
