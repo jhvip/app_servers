@@ -35,6 +35,7 @@ public class DishDaoImpl implements DishDao {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("error 插入失败");
 			return false;
 		} finally {
 			JdbcUtils.close(null, preparedStatement, connection);
@@ -45,7 +46,7 @@ public class DishDaoImpl implements DishDao {
 
 	@Override
 	public boolean deleteDish(String dish_no) {
-		String sql = "delete form fish where dish_no=?";
+		String sql = "delete from fish where dish_no=?";
 		Connection connection = JdbcUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
@@ -54,6 +55,7 @@ public class DishDaoImpl implements DishDao {
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("error 删除失败");
 			return false;
 		} finally {
 			JdbcUtils.close(null, preparedStatement, connection);
@@ -79,6 +81,7 @@ public class DishDaoImpl implements DishDao {
 			preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				System.out.println("error 更改失败");
 				return false;
 			} finally {
 				JdbcUtils.close(null, preparedStatement, connection);
@@ -92,8 +95,9 @@ public class DishDaoImpl implements DishDao {
 		PreparedStatement pstm=null;
 		ResultSet rs=null;
 		Connection conn=JdbcUtils.getConnection();
-		String sql="select  dish_no,dish_name,dish_price,dish_class,dish_discount form dish";
+		String sql="select  dish_no,dish_name,dish_price,dish_class,dish_discount from dish";
 		JSONArray jsonArray =new JSONArray();
+		
 		try {
 			pstm=conn.prepareStatement(sql);
 			rs=pstm.executeQuery();
@@ -109,16 +113,19 @@ public class DishDaoImpl implements DishDao {
 				jsonObject.put("dish_price",dish_price );
 				jsonObject.put("dish_class", dish_class);
 				jsonObject.put("dish_discount",dish_discount );
+		
 				jsonArray.put(jsonObject);
+				
 			}
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("error 删除失败");
+			System.out.println("error 查找失败");
 		}finally{
 			JdbcUtils.close(rs, pstm, conn);
 		}
+		
 		return jsonArray;
 	
 	}

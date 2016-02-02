@@ -122,7 +122,8 @@ public class DishControlServlet extends HttpServlet {
 			break;
 		case "find":
 			JSONArray jsonArray =new JSONArray();
-			jsonObject.put("control", "change");
+			jsonObject.put("control", "find");
+			jsonArray.put(jsonObject);
 			jsonArray.put(dishDao.findDish());
 			try {
 			    out = response.getWriter();
