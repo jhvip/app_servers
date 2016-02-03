@@ -97,11 +97,11 @@ public class DishControlServlet extends HttpServlet {
 		case "change":
 			dish.setDish_no(request.getParameter("dish_no"));
 			dish.setDish_name(request.getParameter("dish_name"));
-			dish.setDish_price(request.getIntHeader("dish_price"));
-			dish.setDish_class(request.getIntHeader("dish_class"));
-			dish.setDish_discount(request.getIntHeader("dish_discount"));
+			dish.setDish_price(Integer.parseInt(request.getParameter("dish_price")) );
+			dish.setDish_class(Integer.parseInt(request.getParameter("dish_class")));
+			dish.setDish_discount(Double.parseDouble(request.getParameter("dish_discount")));
 			
-			boolean chSuccess=dishDao.insertDish(dish);
+			boolean chSuccess=dishDao.changeDish(dish);
 			
 			jsonObject.put("control", "change");
 			if (chSuccess) {
