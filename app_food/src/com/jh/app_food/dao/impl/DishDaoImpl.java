@@ -46,7 +46,7 @@ public class DishDaoImpl implements DishDao {
 
 	@Override
 	public boolean deleteDish(String dish_no) {
-		String sql = "delete from fish where dish_no=?";
+		String sql = "delete from dish where dish_no=?";
 		Connection connection = JdbcUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
