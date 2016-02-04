@@ -21,8 +21,8 @@ public class UserDaoImpl implements UserDao {
 	public boolean userRegist(User user) {
 		// TODO Auto-generated method stub
 		
-		String sql = "insert into guest(guest_name, guest_pw, guest_time) "
-				+ "values(?,?,?);";
+		String sql = "insert into guest(guest_name, guest_pw, guest_time,token) "
+				+ "values(?,?,?,?);";
 		Connection connection = JdbcUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
@@ -30,6 +30,7 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setString(1, user.getGuest_name());
 			preparedStatement.setString(2, user.getGuest_pw());
 			preparedStatement.setString(3, user.getGuest_time());
+			preparedStatement.setString(4, user.getToken());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
