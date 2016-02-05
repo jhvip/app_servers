@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import com.jh.app_food.dao.UserDao;
 import com.jh.app_food.dao.impl.UserDaoImpl;
 import com.jh.app_food.entity.User;
+import com.jh.app_food.utils.Token;
 
 /**
  * Servlet implementation class UserLoginServlet
@@ -43,6 +44,9 @@ public class UserLoginServlet extends HttpServlet {
 		user.setGuest_name(request.getParameter("userName"));
 		user.setGuest_pw(request.getParameter("password"));
 		
+		Token token=new Token();
+		user.setToken(token.getToken());
+		
 		Date now=new Date();
 		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		user.setGuest_time(dateFormat.format(now));
@@ -58,13 +62,11 @@ public class UserLoginServlet extends HttpServlet {
 			
 			JSONObject jsonObject=new JSONObject();
 			jsonObject.put("name", user.getGuest_name());
-			jsonObject.put("time", dateFormat.format(now));
-			JSONArray jsonArray=new JSONArray();
-			jsonArray.put(jsonObject);
-			jsonArray.put(jsonObject);
+			jsonObject.put("token", user.getToken());
+			
 			try {
 			    out = response.getWriter();
-			    out.write(jsonArray.toString());
+			    out.write(jsonObject.toString());
 			} catch (IOException e) {
 			    e.printStackTrace();
 			} finally {
