@@ -11,13 +11,6 @@ public class User {
 	private String guest_name;
 	private String guest_pw;
 	private String guest_time;
-	private String token;
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
 	public String getGuest_name() {
 		return guest_name;
 	}
