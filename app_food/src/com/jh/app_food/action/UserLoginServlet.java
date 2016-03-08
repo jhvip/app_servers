@@ -40,44 +40,59 @@ public class UserLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		User user=new User();
-		user.setGuest_name(request.getParameter("userName"));
-		user.setGuest_pw(request.getParameter("password"));
+//		User user=new User();
+//		user.setGuest_name(request.getParameter("userName"));
+//		user.setGuest_pw(request.getParameter("password"));
+//		
+//		Token token=new Token();
+//		user.setToken(token.getToken());
+//		
+//		Date now=new Date();
+//		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		user.setGuest_time(dateFormat.format(now));
+//		UserDao userDao = new UserDaoImpl();
+//		boolean state = userDao.userRegist(user);
+//		if (state) {
+//			//System.out.println("注册成功");
+//			
+//			response.setCharacterEncoding("UTF-8");
+//			response.setContentType("application/json; charset=utf-8");
+//			
+//			PrintWriter out = null;
+//			
+//			JSONObject jsonObject=new JSONObject();
+//			jsonObject.put("name", user.getGuest_name());
+//			jsonObject.put("token", user.getToken());
+//			
+//			try {
+//			    out = response.getWriter();
+//			    out.write(jsonObject.toString());
+//			} catch (IOException e) {
+//			    e.printStackTrace();
+//			} finally {
+//			    if (out != null) {
+//			        out.close();
+//			    }
+//			}
+//			
+//		} else {
+//			//System.out.println("注册失败");
+//		}
 		
-		Token token=new Token();
-		user.setToken(token.getToken());
 		
-		Date now=new Date();
-		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		user.setGuest_time(dateFormat.format(now));
-		UserDao userDao = new UserDaoImpl();
-		boolean state = userDao.userRegist(user);
-		if (state) {
-			//System.out.println("注册成功");
-			
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=utf-8");
-			
-			PrintWriter out = null;
-			
-			JSONObject jsonObject=new JSONObject();
-			jsonObject.put("name", user.getGuest_name());
-			jsonObject.put("token", user.getToken());
-			
-			try {
-			    out = response.getWriter();
-			    out.write(jsonObject.toString());
-			} catch (IOException e) {
-			    e.printStackTrace();
-			} finally {
-			    if (out != null) {
-			        out.close();
-			    }
-			}
-			
-		} else {
-			//System.out.println("注册失败");
-		}
+		String userName=request.getParameter("userName");
+		String pw=request.getParameter("password");
+		UserDao userDaoLogin=new UserDaoImpl();
+		JSONObject loginInfo=userDaoLogin.userLogin(userName, pw);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json; charset=utf-8");
+		
+		PrintWriter out = null;
+		out=response.getWriter();
+		out.write(loginInfo.toString());
+		
 	}
+		
+		
 
 }
