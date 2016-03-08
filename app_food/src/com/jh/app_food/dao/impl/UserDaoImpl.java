@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.media.j3d.Texture;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,6 +14,7 @@ import com.jh.app_food.dao.UserDao;
 import com.jh.app_food.entity.User;
 import com.jh.app_food.utils.JdbcUtils;
 import com.jh.app_food.utils.Token;
+import com.sun.org.apache.regexp.internal.recompile;
 
 public class UserDaoImpl implements UserDao {
 
@@ -84,24 +87,49 @@ public class UserDaoImpl implements UserDao {
 		}	
 		return true;
 	}
-	
+	//更新token
 	public void updateToken(String userName,String token){
-		String sql = "update guest set token = ? "
-				+"where guest_name= ?";
+		String sql = "update guest set token = ? where guest_name= ?";
 		Connection connection = JdbcUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, userName);
-			preparedStatement.setString(2, token);
+			preparedStatement.setString(1, token);
+			preparedStatement.setString(2, userName);
 			
 			preparedStatement.executeUpdate();
+			System.out.println("更新token成功");
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("error 更新token失败");
 			} finally {
 				JdbcUtils.close(null, preparedStatement, connection);
 			}	
+	}
+	//验证token是否正确
+	public boolean testToken(String userName,String token){
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+		Connection conn=JdbcUtils.getConnection();
+		String sql="select  guest_name from guest where guest_name=? and token=?";
+
+		JSONObject jsonObject=new JSONObject();
+		jsonObject.put("userName", userName);
+		try {
+			pstm=conn.prepareStatement(sql);
+			pstm.setString(1, userName);
+			pstm.setString(2, token);
+			rs=pstm.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("error 验证token失败");
+		} finally {
+			JdbcUtils.close(null, pstm, conn);
+		}
+		return false;
 	}
 
 	

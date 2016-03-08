@@ -12,8 +12,8 @@ public interface UserDao {
 	//用户注册
 	public boolean userRegist(User user);
 	
-	
-	
+	//验证token是否正确
+	public boolean testToken(String userName,String token);
 	
 	
 }
