@@ -22,5 +22,8 @@ error参数解释  1000 登陆正常
 http://127.0.0.1:8080/app_food/DishControlServlet
 请求方式  GET POST
 参数
-	String status
+	String status = insert delete change find
+	String userName 
+	String token
+	
 	

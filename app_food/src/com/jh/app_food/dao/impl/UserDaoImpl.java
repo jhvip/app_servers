@@ -111,17 +111,20 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement pstm=null;
 		ResultSet rs=null;
 		Connection conn=JdbcUtils.getConnection();
-		String sql="select  guest_name from guest where guest_name=? and token=?";
+		String sql="select  guest_name,token from guest where guest_name=? and token=?";
 
-		JSONObject jsonObject=new JSONObject();
-		jsonObject.put("userName", userName);
 		try {
 			pstm=conn.prepareStatement(sql);
 			pstm.setString(1, userName);
 			pstm.setString(2, token);
 			rs=pstm.executeQuery();
+			
 			if (rs.next()) {
+				System.out.println("验证token成功");
 				return true;
+			}else {
+				System.out.println("验证token失败");
+				return false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

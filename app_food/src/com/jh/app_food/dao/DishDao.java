@@ -11,5 +11,5 @@ public interface DishDao {
 	
 	public boolean changeDish(Dish dish);
 	
-	public JSONArray findDish();
+	public JSONArray findDish(String dish_class);
 }

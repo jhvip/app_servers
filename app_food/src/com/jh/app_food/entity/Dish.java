@@ -12,8 +12,15 @@ public class Dish {
 	private String dish_no;
 	private String dish_name;
 	private double dish_price;
+	public String getDish_pic() {
+		return dish_pic;
+	}
+	public void setDish_pic(String dish_pic) {
+		this.dish_pic = dish_pic;
+	}
 	private int dish_class;
 	private double dish_discount;
+	private String dish_pic;
 	@Override
 	public String toString() {
 		return "Dish [dish_no=" + dish_no + ", dish_name=" + dish_name + ", dish_price=" + dish_price + ", dish_class="

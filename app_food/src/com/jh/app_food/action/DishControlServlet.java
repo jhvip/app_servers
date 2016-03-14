@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import com.jh.app_food.dao.DishDao;
 import com.jh.app_food.dao.UserDao;
 import com.jh.app_food.dao.impl.DishDaoImpl;
+import com.jh.app_food.dao.impl.UserDaoImpl;
 import com.jh.app_food.entity.Dish;
 
 /**
@@ -39,12 +40,25 @@ public class DishControlServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
+		UserDao userDao=new UserDaoImpl();
+		
 		String status=request.getParameter("status");
 		DishDao dishDao=new DishDaoImpl();
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");				
 		PrintWriter out = null;				
 		JSONObject jsonObject=new JSONObject();
+		//验证token是否正确
+		String userName=request.getParameter("userName");
+		String token =request.getParameter("token");
+		if (!userDao.testToken(userName, token)) {
+			jsonObject.put("error", "1001");
+		    out = response.getWriter();
+		    out.write(jsonObject.toString());
+		    return;
+		}
+		
+		
 		Dish dish=new Dish();
 		switch (status) {
 		case "insert":
@@ -121,13 +135,10 @@ public class DishControlServlet extends HttpServlet {
 			}
 			break;
 		case "find":
-			JSONArray jsonArray =new JSONArray();
-			jsonObject.put("control", "find");
-			jsonArray.put(jsonObject);
-			jsonArray.put(dishDao.findDish());
+			String dish_class =request.getParameter("class");
 			try {
 			    out = response.getWriter();
-			    out.write(jsonArray.toString());
+			    out.write(dishDao.findDish(dish_class).toString());
 			} catch (IOException e) {
 			    e.printStackTrace();
 			} finally {
