@@ -132,4 +132,48 @@ public class DishDaoImpl implements DishDao {
 	
 	}
 
+	@Override
+	public JSONArray findComment(String dish_no) {
+		// TODO Auto-generated method stub
+
+		PreparedStatement pstm=null;
+		ResultSet rs=null;
+		Connection conn=JdbcUtils.getConnection();
+		String sql="select dish_comment,guestName,time,iconImage from comment where dish_no=?";
+		JSONArray jsonArray =new JSONArray();
+		
+		try {
+			pstm=conn.prepareStatement(sql);
+			pstm.setString(1, dish_no);
+			
+			rs=pstm.executeQuery();
+			while(rs.next()){
+				
+				String dish_comment=rs.getString(1);
+				String guestName=rs.getString(2);
+				String time=rs.getString(3);
+				String iconImage=rs.getString(4);
+				
+				JSONObject jsonObject=new JSONObject();
+				jsonObject.put("commentMsg", dish_comment);
+				jsonObject.put("guestName", guestName);
+				jsonObject.put("time", time);
+				jsonObject.put("iconImage", iconImage);
+						
+				jsonArray.put(jsonObject);
+			
+				System.out.println(jsonObject);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("error 菜单评论查找失败");
+		}finally{
+			JdbcUtils.close(rs, pstm, conn);
+		}
+		
+		return jsonArray;
+	}
+
 }

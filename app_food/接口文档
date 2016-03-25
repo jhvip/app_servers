@@ -25,5 +25,19 @@ http://127.0.0.1:8080/app_food/DishControlServlet
 	String status = insert delete change find
 	String userName 
 	String token
+
+
+查询菜单详情
+http://127.0.0.1:8080/app_food/DishDetailServlet?dish_no=1003
+请求方式 GET
+参数 string dish_no
+返回参数
+	dish_pic":"1002.jpg",
+	"dish_name":"炒花生米",
+	"dish_no":"1002",
+	"dish_tag":"既往的清洁剂",
+	"dish_detail":"第几位"
 	
+ 
+
 	
